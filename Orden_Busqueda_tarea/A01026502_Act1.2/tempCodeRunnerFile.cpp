@@ -1,0 +1,1 @@
+readFile("cost.txt",v2);
