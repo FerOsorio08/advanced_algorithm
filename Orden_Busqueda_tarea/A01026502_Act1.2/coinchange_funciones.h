@@ -10,16 +10,31 @@
 
 using namespace std;
 
+
+
 // Declaraciones de funciones
+void recibeDatos(int n, vector<int> &v);
 void printVector(vector<int> v);
 int readFile(string x, vector<int> &v);
-int getChange(vector<int> &v);
+int getChange(int n, int j);
 int minNumMonGR(int n, vector<int> &v);
 int minNumMonPD(int n, vector<int> &v);
 
 // función para imprimir el vector, recibe un vector de enteros
 // regresa un 0 si se pudo imprimir el vector
 // Complejidad O(n)
+void recibeDatos(int n, vector<int> &v)
+{
+    int x;
+    for (int i = 0; i < n; i++)
+    {
+        cout << "Ingresa la denominacion de la moneda " << i + 1 << ": ";
+        cin >> x;
+        v.push_back(x);
+    }
+    return;
+}
+
 void printVector(vector<int> v)
 {
     for (auto i = v.begin(); i != v.end(); ++i)
@@ -71,11 +86,11 @@ int readFile(string x, vector<int> &v)
     return 0;
 }
 
-int getChange(vector<int> &v)
+int getChange(int n, int j)
 {
     int c;
     // cout << "\nEl cambio es: " << endl;
-    c = v[1] - v[0];
+    c = j - n;
     return c;
 }
 
