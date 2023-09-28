@@ -5,6 +5,9 @@
 #include "coinchange_funciones.h"
 using namespace std;
 
+// Declaraciones de funciones
+vector<int> monedas;
+
 int main(int argc, char *argv[])
 {
 
@@ -16,11 +19,15 @@ int main(int argc, char *argv[])
     int k = 0; // pago
 
     // readFile("ejemplo01coins.txt", v); // leer el archivo y guardar los datos en el vector v
-    cout << "Cuantas monedas hay:" << endl;
+    cout << "\x1B[1;32m"
+         << "Cuantas monedas hay:"
+         << "\x1B[0m" << endl;
     cin >> n;
-    cout << "Posibles denomicaciones:" << endl;
-    recibeDatos(n, v); // leer el archivo y guardar los datos en el vector v
-    cout << "\x1B[1m"
+    cout << "\x1B[1;32m"
+         << "Posibles denomicaciones:"
+         << "\x1B[0m" << endl;
+    recibeDatos(n, monedas); // leer el archivo y guardar los datos en el vector v
+    cout << "\x1B[1;34m"
          << "Cual es el costo:"
          << "\x1B[0m" << endl;
     cin >> j;
@@ -28,10 +35,10 @@ int main(int argc, char *argv[])
          << "Cual es el pago:"
          << "\x1B[0m" << endl;
     cin >> k;
-    cout << "\x1B[1m"
+    cout << "\x1B[1;35m"
          << "Usando Greedy Algorithm:"
          << "\x1B[0m" << endl;
-    minNumMonGR(getChange(j, k), v);
+    minNumMonGR(getChange(j, k), monedas);
 
     return 0;
 }
