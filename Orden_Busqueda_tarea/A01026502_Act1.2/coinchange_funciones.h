@@ -13,8 +13,6 @@
 
 using namespace std;
 
-
-
 // Declaraciones de funciones
 void recibeDatos(int n, vector<int> &v);
 void printVector(vector<int> v);
@@ -22,7 +20,7 @@ int readFile(string x, vector<int> &v);
 int getChange(int n, int j);
 vector<int> minNumMonGR(int n, vector<int> &v);
 vector<int> minNumMonPD(int n, vector<int> &v);
-void escribeRespuesta(int n, const vector<int>& v);
+void escribeRespuesta(int n, const vector<int> &v);
 
 // función para imprimir el vector, recibe un vector de enteros
 // regresa un 0 si se pudo imprimir el vector
@@ -117,24 +115,29 @@ vector<int> minNumMonGR(int n, vector<int> &v)
 
 vector<int> minNumMonPD(int n, vector<int> &v)
 {
-    sort(v.begin(), v.end()); // ordenar el vector de menor a mayor
-    vector<int> monedas;      // vector para guardar las monedas
-    vector <int> dp(n+1, INT_MAX); //INT_MAX para indicar que no hay solución
+    sort(v.begin(), v.end());       // ordenar el vector de menor a mayor
+    vector<int> monedas;            // vector para guardar las monedas
+    vector<int> dp(n + 1, INT_MAX); // INT_MAX para indicar que no hay solución
     dp[0] = 0;
-    for (int i = 1; i <= n;i++){
-        for (int j = 0; j < v.size();j++){
-            if (v[j] <= i){
-                int sub_res = dp[i - v[j]]; //sub_res es el resultado de la subproblema
-                if (sub_res != INT_MAX && sub_res + 1 < dp[i]){ //si hay solución y es menor a la que ya se tiene
-                    dp[i] = sub_res + 1; //actualizar el valor de la solución
-                }
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 0; j < v.size() && v[j] <= i; j++)
+        {
+
+            int sub_res = dp[i - v[j]]; // sub_res es el resultado de la subproblema
+            if (sub_res != INT_MAX && sub_res + 1 < dp[i])
+            {                        // si hay solución y es menor a la que ya se tiene
+                dp[i] = sub_res + 1; // actualizar el valor de la solución
             }
         }
     }
     int remaining = n;
-    while (remaining > 0){
-        for (int i = 0; i < v.size();i++){
-            if (dp[remaining] == dp[remaining - v[i]] + 1){
+    while (remaining > 0)
+    {
+        for (int i = 0; i < v.size(); i++)
+        {
+            if (dp[remaining] == dp[remaining - v[i]] + 1)
+            {
                 monedas.push_back(v[i]);
                 remaining = remaining - v[i];
                 break;
@@ -143,10 +146,10 @@ vector<int> minNumMonPD(int n, vector<int> &v)
     }
     cout << "\nEl numero minimo de monedas con programación dinámica es: " << monedas.size() << endl;
     return monedas;
-
 }
 
-void escribeRespuesta(int n, const vector<int>& v){
+void escribeRespuesta(int n, const vector<int> &v)
+{
     cout << "\nLas monedas son: " << endl;
     for (int i = 0; i < v.size(); i++)
     {
