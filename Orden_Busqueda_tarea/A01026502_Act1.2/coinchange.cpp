@@ -1,3 +1,6 @@
+//Fernanda Osorio Arroyo - A01026502
+// 28 de septiembre del 2023
+//Este archivo sirve para resolver el problema "cambio de monedas" utilizando el algoritmo Greedy y programación Dinámica
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -7,6 +10,8 @@ using namespace std;
 
 // Declaraciones de funciones
 vector<int> monedas;
+void minNumMonGR(int n);
+void minNumMonPD(int n);
 
 int main(int argc, char *argv[])
 {
@@ -38,7 +43,15 @@ int main(int argc, char *argv[])
     cout << "\x1B[1;35m"
          << "Usando Greedy Algorithm:"
          << "\x1B[0m" << endl;
-    minNumMonGR(getChange(j, k), monedas);
+    minNumMonGR(getChange(j, k));
 
     return 0;
+}
+
+void minNumMonGR(int n){
+    minNumMonGR(n, monedas);
+}
+
+void minNumMonPD(int n){
+    minNumMonPD(n, monedas);
 }
