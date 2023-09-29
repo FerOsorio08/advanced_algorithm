@@ -101,13 +101,13 @@ int getChange(int n, int j){
 
 // función para calcular el número mínimo de monedas con greedy, recibe el cambio y el vector de monedas
 // regresa el vector de monedas
-// Complejidad O(n)
+// Complejidad O(nlogn + m)
 vector<int> minNumMonGR(int n, vector<int> &v){
-    sort(v.begin(), v.end()); // ordenar el vector de menor a mayor
+    sort(v.begin(), v.end()); // ordenar el vector de menor a mayor, Complejidad O(nlogn)
     vector<int> monedas;      // vector para guardar las monedas
-    for (int i = v.size() - 1; i >= 0; i--)
+    for (int i = v.size() - 1; i >= 0; i--) // Complejidad O(n)
     {
-        while (n >= v[i]) // mientras el cambio sea mayor o igual a la moneda
+        while (n >= v[i]) // mientras el cambio sea mayor o igual a la moneda, Complejidad O(m)
         {
             n = n - v[i];
             monedas.push_back(v[i]);
@@ -120,13 +120,13 @@ vector<int> minNumMonGR(int n, vector<int> &v){
 
 // función para calcular el número mínimo de monedas con programación dinámica, recibe el cambio y el vector de monedas
 // regresa el vector de monedas
-// Complejidad O(n^2)
+// Complejidad O(n*m + nlogn)
 vector<int> minNumMonPD(int n, vector<int> &v){
-    sort(v.begin(), v.end());       // ordenar el vector de menor a mayor
+    sort(v.begin(), v.end());       // ordenar el vector de menor a mayor, Complejidad O(nlogn)
     vector<int> monedas;            // vector para guardar las monedas
     vector<int> dp(n + 1, INT_MAX); // INT_MAX para que cualquier valor sea menor
     dp[0] = 0;                      // caso base
-    for (int i = 1; i <= n; i++)
+    for (int i = 1; i <= n; i++)   // Complejidad O(n*m)
     {
         for (int j = 0; j < v.size() && v[j] <= i; j++)
         {
