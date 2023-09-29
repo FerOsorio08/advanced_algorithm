@@ -41,11 +41,11 @@ int main(int argc, char *argv[]){
           << "\x1B[0m" << endl;
      cin >> k;            // recibe el pago
      x = getChange(k, j); // calcuka el cambio con función getChange
+      cout << "\x1B[1m"
+          << "\nEl cambio es:  " << x
+          << "\x1B[0m" << endl;
      cout << "\x1B[1;35m"
           << "Usando Greedy Algorithm:"
-          << "\x1B[0m" << endl;
-     cout << "\x1B[1m"
-          << "El cambio es:  " << x
           << "\x1B[0m" << endl;
      moneditas = minNumMonGR(x); // guarda el resultado de la función minNumMonGR en el vector moneditas
      escribeRespuesta(x);
