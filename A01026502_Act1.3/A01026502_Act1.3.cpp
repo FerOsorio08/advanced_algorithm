@@ -23,7 +23,9 @@ int main(int argc, char *argv[]){
     PrintMatrix(laberynth);
     cout << endl;
     cout << "Solución: " << endl;
-    // Backtracking(laberynth);
+    Backtracking(laberynth);
+    PrintMatrix(laberynth);
+    // BranchBound(laberynth);
 }
 
 void ReadFile(string x){
