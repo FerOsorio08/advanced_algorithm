@@ -24,7 +24,6 @@ int main(int argc, char *argv[]){
     cout << endl;
     cout << "Solución: " << endl;
     Backtracking(laberynth);
-    PrintMatrix(laberynth);
     // BranchBound(laberynth);
 }
 

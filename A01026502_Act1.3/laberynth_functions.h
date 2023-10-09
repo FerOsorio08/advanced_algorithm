@@ -75,7 +75,7 @@ void PrintMatrix(vector<vector<int> > v)
 //función que resuelve el laberinto usando el algoritmo de Backtracking
 vector< vector <int > > Backtracking(vector<vector<int> > &v)
 {
-    vector<vector<int> > solution;
+    vector<vector<int> > solution(v.size(), vector<int>(v[0].size(), 0));
     vector<vector<int> > visited(v.size(), vector<int>(v[0].size(), 0));
     int di[] = { 1, 0, 0,-1 };
     int dj[] = { 0,-1, 1, 0 };
@@ -104,13 +104,13 @@ void Backtracking(vector<vector<int> > &v, vector<vector<int> > &solution, vecto
         int nextj = j + dj[k];
         if (nexti >= 0 && nexti < v.size() && nextj >= 0 && nextj < v[0].size() && v[nexti][nextj] == 1 && !visited[nexti][nextj]){
             cout << "nexti: " << nexti << endl;
-            visited[i][j] = 1;
+            visited[nexti][nextj] = 1; // Mark the cell as visited
             Backtracking(v, solution, visited, nexti, nextj, found, di, dj);
             if (!found){
-                solution[i][j] = 0;
+                solution[nexti][nextj] = 0;
                 cout << "sol: " << solution[i][j] << endl;
             }
-            visited[i][j] = 0;
+            visited[nexti][nextj] = 0;
         }
 
     }
