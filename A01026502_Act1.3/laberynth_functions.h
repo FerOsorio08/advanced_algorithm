@@ -104,6 +104,7 @@ void Backtracking(vector<vector<int> > &v, vector<vector<int> > &solution, vecto
         int nextj = j + dj[k];
         if (nexti >= 0 && nexti < v.size() && nextj >= 0 && nextj < v[0].size() && v[nexti][nextj] == 1 && !visited[nexti][nextj]){
             cout << "nexti: " << nexti << endl;
+            cout << "nextj: " << nextj << endl;
             visited[nexti][nextj] = 1; // Mark the cell as visited
             Backtracking(v, solution, visited, nexti, nextj, found, di, dj);
             if (!found){
