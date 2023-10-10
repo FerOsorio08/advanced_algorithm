@@ -23,11 +23,17 @@ int main(int argc, char *argv[]){
     PrintMatrix(laberynth);
     cout << endl;
     cout << "Solución: " << endl;
-    Backtracking(laberynth);
-    // BranchBound(laberynth);
+    Backtracking();
+    // BranchBound();
 }
 
 void ReadFile(string x){
     ReadFile("maze.txt", laberynth);
     
+}
+void Backtracking(){
+    Backtracking(laberynth);
+}
+void BranchBound(){
+    BranchBound(laberynth);
 }

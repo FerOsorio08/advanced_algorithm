@@ -18,7 +18,8 @@ using namespace std;
 void ReadFile(string x, vector<vector<int> > &v);
 void PrintMatrix(vector<vector<int> > v);
 vector< vector <int > > Backtracking(vector<vector<int> > &v);
-void Backtracking(vector<vector<int> > &v, vector<vector<int> > &solution, vector<vector<int> > &visited, int i, int j, bool &found, int di[], int dj[]);
+bool Backtracking(vector<vector<int> > &v, vector<vector<int> > &solution, vector<vector<int> > &visited, int i, int j, bool &found, int di[], int dj[]);
+bool isSafe(vector<vector< int > > &v, int x, int y);
 void BranchBound(vector<vector<int> > &v);
 void BranchBound(vector<vector<int> > &v, vector<vector<int> > &solution, vector<vector<int> > &visited, int i, int j, bool &found, int di[], int dj[]);
 
@@ -93,35 +94,48 @@ vector< vector <int > > Backtracking(vector<vector<int> > &v)
 }
 
 //función auxiliar para resolver el laberinto usando el algoritmo de Backtracking
-void Backtracking(vector<vector<int> > &v, vector<vector<int> > &solution, vector<vector<int> > &visited, int i, int j, bool &found, int di[], int dj[]){
-    if (i == v.size() - 1 && j == v[0].size() - 1) {
+bool Backtracking(vector<vector<int> > &v, vector<vector<int> > &solution, vector<vector<int> > &visited, int i, int j, bool &found, int di[], int dj[]) {
+    if (i == v.size() - 1 && j == v[0].size() - 1 && v[i][j] == 1) {
         solution[i][j] = 1;
         found = true;
-        return;
+        return true;
     }
-    for (int k = 0; k < 4; k++){
+    if(isSafe(v, i, j)){
+        if(solution[i][j] == 1){
+            found = false;
+            return false;
+        }
+        solution[i][j] = 1;
+        
+    }
+    
+    for (int k = 0; k < 4; k++) {
         int nexti = i + di[k];
         int nextj = j + dj[k];
-        if (nexti >= 0 && nexti < v.size() && nextj >= 0 && nextj < v[0].size() && v[nexti][nextj] == 1 && !visited[nexti][nextj]){
-            cout << "nexti: " << nexti << endl;
-            cout << "nextj: " << nextj << endl;
-            visited[nexti][nextj] = 1; // Mark the cell as visited
-            Backtracking(v, solution, visited, nexti, nextj, found, di, dj);
-            if (!found){
-                solution[nexti][nextj] = 0;
-                cout << "sol: " << solution[i][j] << endl;
-            }
-            visited[nexti][nextj] = 0;
+        if (nexti >= 0 && nexti < v.size() && nextj >= 0 && nextj < v[0].size() && v[nexti][nextj] == 1 && visited[nexti][nextj]==1 && Backtracking(v, solution, visited, nexti, nextj, found, di, dj)) {
+            // visited[nexti][nextj] = 1; // Mark the cell as visited
+            // Backtracking(v, solution, visited, nexti, nextj, found, di, dj);
+            // if (!found) {
+            //     // Reset the cell when backtracking
+            //     solution[nexti][nextj] = 0;
+            // }
+            // visited[nexti][nextj] = 0; // Mark the cell as unvisited
+            return true;
         }
-
     }
-   
 }
 
+bool isSafe(vector< vector <int > >&v, int x, int y)
+{
+	// if (x, y outside maze) return false
+	if (x >= 0 && x < v.size() && y >= 0 && y < v[0].size() && v[x][y] == 1)
+        return true;
+    return false;
+}
 
 //función que resuelve el laberinto usando el algoritmo de Branch and Bound
 void BranchBound(vector<vector<int> > &v){
-    vector<vector<int> > solution;
+    vector<vector<int> > solution(v.size(), vector<int>(v[0].size(), 0));
     vector<vector<int> > visited(v.size(), vector<int>(v[0].size(), 0));
     int di[] = { 1, 0, 0,-1 };
     int dj[] = { 0,-1, 1, 0 };
@@ -148,13 +162,14 @@ void BranchBound(vector<vector<int> > &v, vector<vector<int> > &solution, vector
         int nextj = j + dj[k];
         if (nexti >= 0 && nexti < v.size() && nextj >= 0 && nextj < v[0].size() && v[nexti][nextj] == 1 && !visited[nexti][nextj]){
             cout << "nexti: " << nexti << endl;
-            visited[i][j] = 1;
+            cout << "nextj: " << nextj << endl;
+            visited[nexti][nextj] = 1; // Mark the cell as visited
             BranchBound(v, solution, visited, nexti, nextj, found, di, dj);
             if (!found){
-                solution[i][j] = 0;
+                solution[nexti][nextj] = 0;
                 cout << "sol: " << solution[i][j] << endl;
             }
-            visited[i][j] = 0;
+            visited[nexti][nextj] = 0;
         }
 
     }
