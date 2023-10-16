@@ -1,5 +1,3 @@
 Este es un archivo de ejemplo.
 Puede contener varias líneas de texto.
 Incluso puede tener saltos de línea.
-
-Este es solo un archivo de muestra para probar el programa.

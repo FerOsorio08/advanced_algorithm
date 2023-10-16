@@ -6,6 +6,7 @@
 #include <vector>
 #include <iomanip>
 #include <sstream>
+#include "hash_functions.h"
 
 using namespace std;
 
@@ -34,7 +35,8 @@ string calculateHash(const string& filename, int n) {
     return hashStream.str();
 }
 
-int main() {
+
+int main(int argc, char *argv[]) {
     string filename;
     int n;
 
