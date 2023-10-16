@@ -10,31 +10,6 @@
 
 using namespace std;
 
-string calculateHash(const string& filename, int n) {
-    ifstream file(filename);
-    if (!file) {
-        cerr << "No se pudo abrir el archivo." << endl;
-        return "";
-    }
-
-    vector<int> a(n, 0);
-    char ch;
-    int columnIndex = 0;
-
-    while (file.get(ch)) {
-        a[columnIndex] += static_cast<int>(ch);
-        columnIndex = (columnIndex + 1) % n;
-    }
-
-    ostringstream hashStream;
-    for (int i = 0; i < n; i++) {
-        a[i] %= 256;
-        hashStream << hex << setw(2) << setfill('0') << a[i];
-    }
-
-    return hashStream.str();
-}
-
 
 int main(int argc, char *argv[]) {
     string filename;

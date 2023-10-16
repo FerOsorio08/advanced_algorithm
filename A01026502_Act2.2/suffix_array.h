@@ -1,3 +1,6 @@
+//Fernanda Osorio Arroyo - A01026502
+//16 de Octubre del 2023
+//Este archivo implementa el algoritmo de suffix array 
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -10,49 +13,53 @@
 
 using namespace std;
 
+//inicializar la estructura suffix
 struct suffix
 {
 	int index;
 	char *suff;
 };
 
-// A comparison function to compare two suffixes
+//función para comparar los sufijos de acuerdo al orden alfabético y regresar 1 si el primer sufijo es menor que el segundo
+//recibe dos estructuras suffix
 int cmp(struct suffix a, struct suffix b)
 {
 	return strcmp(a.suff, b.suff) < 0? 1 : 0;
 }
 
-// This is the main function that takes a string 'txt' of size n as an
-// argument, builds and return the suffix array for the given string
+
+//función para construir el suffix array
+//recibe un string y su tamaño
+//regresa un apuntador a un entero que es el suffix array
 int *buildSuffixArray(char *txt, int n)
 {
-	// A structure to store suffixes and their indexes
+	//estructura para almacenar los sufijos y sus índices
 	struct suffix suffixes[n];
 
-	// Store suffixes and their indexes in an array of structures.
-	// The structure is needed to sort the suffixes alphabetically
-	// and maintain their old indexes while sorting
+    //iterar sobre el string y almacenar los sufijos y sus índices en la estructura
+    //mientras se itera, se incrementa el apuntador al string
 	for (int i = 0; i < n; i++)
 	{
 		suffixes[i].index = i;
 		suffixes[i].suff = (txt+i);
 	}
 
-	// Sort the suffixes using the comparison function
-	// defined above.
+	//ordenar los sufijos usando la función cmp
 	sort(suffixes, suffixes+n, cmp);
 
-	// Store indexes of all sorted suffixes in the suffix array
+	//guardar los índices de los sufijos ordenados en un arreglo
+    //inicializar el arreglo con el tamaño del string
 	int *suffixArr = new int[n];
 	for (int i = 0; i < n; i++)
 		suffixArr[i] = suffixes[i].index;
 
-	// Return the suffix array
+	//regresar el suffix array
 	return suffixArr;
 }
 
-// A utility function to print an array of given size
-void printArr(int arr[], int n)
+//función para imprimir el suffix array
+//recibe un apuntador a un entero que es el suffix array y su tamaño
+void imprimirArreglo(int arr[], int n)
 {
 	for(int i = 0; i < n; i++)
 		cout << arr[i] << " ";

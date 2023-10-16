@@ -17,6 +17,6 @@ int main(int argc, char *argv[])
 	int n = strlen(txt);
 	int *suffixArr = buildSuffixArray(txt, n);
 	cout << "Following is suffix array for " << txt << endl;
-	printArr(suffixArr, n);
+	imprimirArreglo(suffixArr, n);
 	return 0;
 }
