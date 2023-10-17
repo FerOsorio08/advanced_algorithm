@@ -8,14 +8,13 @@
 using namespace std;
 
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
 	// char txt[] = "banana";
 	char txt[100];
 	cout << "String" << endl;
 	cin >> txt;
 	int n = strlen(txt);
-	int *suffixArr = buildSuffixArray(txt, n);
+	int *suffixArr = SuffixArray(txt, n);
 	cout << "Following is suffix array for " << txt << endl;
 	imprimirArreglo(suffixArr, n);
 	return 0;

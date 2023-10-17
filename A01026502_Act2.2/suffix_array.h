@@ -13,59 +13,68 @@
 
 using namespace std;
 
+
+//Declaraciones de funciones
+void imprimirArreglo(int arr[], int n);
+int *SuffixArray(char *txt, int n);
+
+
+//función para imprimir el suffix array
+//recibe un apuntador a un entero que es el suffix array y su tamaño
+//complehidad O(n)
+void imprimirArreglo(int arr[], int n){
+	for(int i = 0; i < n; i++)
+		cout << arr[i] << " ";
+	cout << endl;
+}
+
 //inicializar la estructura suffix
-struct suffix
-{
+//Complejidad O(1)
+struct suffix{
 	int index;
 	char *suff;
 };
-
-//función para comparar los sufijos de acuerdo al orden alfabético y regresar 1 si el primer sufijo es menor que el segundo
-//recibe dos estructuras suffix
-int compare(struct suffix a, struct suffix b)
-{
-	//strcmp para comparar los sufijos de acuerdo al orden alfabético
-	return strcmp(a.suff, b.suff) < 0? 1 : 0;
-}
 
 
 //función para construir el suffix array
 //recibe un string y su tamaño
 //regresa un apuntador a un entero que es el suffix array
-int *buildSuffixArray(char *txt, int n)
-{
-	//estructura para almacenar los sufijos y sus índices
-	struct suffix suffixes[n];
 
-    //iterar sobre el string y almacenar los sufijos y sus índices en la estructura
-    //mientras se itera, se incrementa el apuntador al string
+//complejidad O(n)
+int *SuffixArray(char *txt, int n){
+	//estructura para almacenar los sufijos y sus índices
+	struct suffix sufijos[n];
+
+	//iterar sobre el string y almacenar los sufijos y sus índices en la estructura
+	//mientras se itera, se incrementa el apuntador al string
 	for (int i = 0; i < n; i++)
 	{
-		suffixes[i].index = i;
-		suffixes[i].suff = (txt+i);
+		sufijos[i].index = i;
+		sufijos[i].suff = (txt+i);
 	}
 
-	//ordenar los sufijos usando la función compare
-	sort(suffixes, suffixes+n, compare);
-
-	//guardar los índices de los sufijos ordenados en un arreglo
-    //inicializar el arreglo con el tamaño del string
-	int *suffixArr = new int[n];
+	//contar la frecuencia de cada caracter en el string
+	int count[256] = {0};
 	for (int i = 0; i < n; i++)
-		suffixArr[i] = suffixes[i].index;
+		count[static_cast<int>(txt[i])]++;
+
+	//calcular la posición de inicio de cada caracter en el suffix array
+	for (int i = 1; i < 256; i++)
+		count[i] += count[i-1];
+
+	//ordenar los sufijos usando counting sort
+	int *suffixArr = new int[n];
+	for (int i = n-1; i >= 0; i--)
+	{
+		int index = count[static_cast<int>(sufijos[i].suff[0])] - 1;
+		suffixArr[index] = sufijos[i].index;
+		count[static_cast<int>(sufijos[i].suff[0])]--;
+	}
 
 	//regresar el suffix array
 	return suffixArr;
 }
 
-//función para imprimir el suffix array
-//recibe un apuntador a un entero que es el suffix array y su tamaño
-void imprimirArreglo(int arr[], int n)
-{
-	for(int i = 0; i < n; i++)
-		cout << arr[i] << " ";
-	cout << endl;
-}
 
 
 #endif

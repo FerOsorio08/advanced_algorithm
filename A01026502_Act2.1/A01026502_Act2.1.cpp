@@ -1,6 +1,6 @@
-//Fernanda Osorio Arroyo - A01026502
-//16 de Octubre del 2023
-//Este archivo implementa hash strings
+// Fernanda Osorio Arroyo - A01026502
+// 16 de Octubre del 2023
+// Este archivo implementa hash strings
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -10,8 +10,7 @@
 
 using namespace std;
 
-
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]){
     string filename;
     int n;
 
@@ -21,13 +20,15 @@ int main(int argc, char *argv[]) {
     cout << "Ingrese el valor de n (un entero múltiplo de 4, 16 <= n <= 64): ";
     cin >> n;
 
-    if (n % 4 != 0 || n < 16 || n > 64) {
+    if (n % 4 != 0 || n < 16 || n > 64)
+    {
         cerr << "El valor de n no cumple con los requisitos." << endl;
         return 1;
     }
 
     string hash = calculateHash(filename, n);
-    cout << "Resultado del hash: " << hash << endl;
+    cout << "\x1B[1;32m"
+         << "Texto con Hash: " << hash << "\x1B[0m" << endl;
 
     return 0;
 }
