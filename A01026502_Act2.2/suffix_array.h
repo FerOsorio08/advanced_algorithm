@@ -22,8 +22,9 @@ struct suffix
 
 //función para comparar los sufijos de acuerdo al orden alfabético y regresar 1 si el primer sufijo es menor que el segundo
 //recibe dos estructuras suffix
-int cmp(struct suffix a, struct suffix b)
+int compare(struct suffix a, struct suffix b)
 {
+	//strcmp para comparar los sufijos de acuerdo al orden alfabético
 	return strcmp(a.suff, b.suff) < 0? 1 : 0;
 }
 
@@ -44,8 +45,8 @@ int *buildSuffixArray(char *txt, int n)
 		suffixes[i].suff = (txt+i);
 	}
 
-	//ordenar los sufijos usando la función cmp
-	sort(suffixes, suffixes+n, cmp);
+	//ordenar los sufijos usando la función compare
+	sort(suffixes, suffixes+n, compare);
 
 	//guardar los índices de los sufijos ordenados en un arreglo
     //inicializar el arreglo con el tamaño del string
