@@ -16,8 +16,10 @@
 using namespace std;
 
 //Declaraciones de clases
+// Clase para representar una arista
 class Edge {
 public:
+    // Nodos que conecta la arista
     int start, end, weight;
 
     // Constructor para inicializar los miembros de la clase
@@ -33,6 +35,7 @@ vector<vector<int> > construirMatrizAdyacencia(int n, const vector<Edge>& edges)
 
 // función para leer el archivo, recibe el nombre del archivo
 // regresa nada
+//Complejidad = O(E), donde E es el numero de aristas
 vector<Edge> ReadFile(const string& x){
     // Abrir el archivo de entrada
     ifstream inputFile(x);
@@ -71,16 +74,17 @@ vector<Edge> ReadFile(const string& x){
 
 //función para construir la matriz de adyacencia, recibe el número de nodos y el vector de aristas
 //regresa la matriz de adyacencia
+//Complejidad = O(n^2), donde n es el numero de nodos
 vector<vector<int> > construirMatrizAdyacencia(int n, const vector<Edge>& edges){
 
     vector<vector<int> > adjacencyMatrix(n, vector<int>(n, -1));
 
-    // Set diagonal elements to zero
+    // La diagnonal de la matriz de adyacencia es 0
     for (int i = 0; i < n; ++i) {
         adjacencyMatrix[i][i] = 0;
     }
 
-    // Fill in the adjacency matrix based on the directed edges
+    //LLenar la matriz de adyacencia con los pesos de las aristas dependiendo de los nodos que conectan
     for (const Edge& edge : edges) {
         adjacencyMatrix[edge.start][edge.end] = edge.weight;
     }
