@@ -21,12 +21,22 @@ vector<vector<int> > FloydWarshall(const vector<vector<int> >& adjacencyMatrix) 
     int n = adjacencyMatrix.size();
     vector<vector<int> > A = adjacencyMatrix;
 
+    // Replace -1 with infinity
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (A[i][j] == -1) {
+                A[i][j] = numeric_limits<int>::max();
+            }
+        }
+    }
+
     for (int k = 0; k < n; ++k) {
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j) {
-                //Ak[i, j] = min (Ak-1[i, j], Ak-1[i, k] + Ak-1[k, j])
-                if (A[i][k] != -1 && A[k][j] != -1) {
-                    A[i][j] = min(A[i][j], A[i][k] + A[k][j]);
+                if (A[i][k] != numeric_limits<int>::max() && A[k][j] != numeric_limits<int>::max()) {
+                    if (A[i][k] + A[k][j] < A[i][j]) {
+                        A[i][j] = A[i][k] + A[k][j];
+                    }
                 }
             }
         }
