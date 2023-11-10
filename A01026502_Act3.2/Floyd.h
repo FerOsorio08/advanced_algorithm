@@ -25,7 +25,8 @@ vector<vector<int> > FloydWarshall(const vector<vector<int> >& adjacencyMatrix) 
     int n = adjacencyMatrix.size();
     vector<vector<int> > A = adjacencyMatrix;
 
-    // Initialize the matrix con valor de infinito
+    // Inicializar la matriz con valor de infinito
+    //numeric_limits<int>::max() es el valor maximo que puede tener un int
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
             if (A[i][j] == -1) {
@@ -48,7 +49,7 @@ vector<vector<int> > FloydWarshall(const vector<vector<int> >& adjacencyMatrix) 
             }
         }
     }
-
+    
     return A;
 }
 

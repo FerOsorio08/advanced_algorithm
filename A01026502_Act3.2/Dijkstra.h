@@ -20,11 +20,13 @@ using namespace std;
 //Comlejidad = O(E+VlogV), donde E es el numero de aristas y V el numero de vertices
 pair<vector<int>, vector<int> > dijkstra(const vector<vector<int> >& graph, int source) {
     int n = graph.size();
+    //distancia para guardar la distancia mas corta
     vector<int> distance(n, numeric_limits<int>::max());
+    //previo para guardar el camino mas corto
     vector<int> previous(n, NULL);
     priority_queue<pair<int, int>, vector<pair<int, int> >, greater<pair<int, int> > > priorityQ;
     
-    //for each node in graph if the node is different from the source node add it to the priority queue
+    //para cada nodo en el grafo si el nodo es diferente del nodo fuente se agrega a la cola de prioridad
     for (int i = 0; i < n; ++i) {
         if (i != source) {
             priorityQ.push(make_pair(distance[i], i));
@@ -32,20 +34,25 @@ pair<vector<int>, vector<int> > dijkstra(const vector<vector<int> >& graph, int 
     }
     distance[source] = 0;
 
-    // Priority queue to store vertices and their distances
+    //Cola de prioridad con el nodo fuente
     
     priorityQ.push(make_pair(0, source));
 
+    //mientras la cola de prioridad no este vacia
     while (!priorityQ.empty()) {
         int u = priorityQ.top().second;
+        //se saca el nodo con la menor distancia
         priorityQ.pop();
 
         for (int v = 0; v < n; ++v) {
+            //si el nodo v es diferente del nodo u y la distancia entre u y v es diferente de -1
             if (graph[u][v] != -1) {
+                //entonces la distancia temporal es la distancia de u mas la distancia entre u y v
                 int tempDistance = distance[u] + graph[u][v];
                 if (tempDistance < distance[v]) {
                     distance[v] = tempDistance;
                     previous[v] = u;
+                    //se agrega a la cola de prioridad
                     priorityQ.push(make_pair(distance[v], v));
                 }
             }

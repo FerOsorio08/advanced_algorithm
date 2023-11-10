@@ -57,6 +57,7 @@ vector<Edge> ReadFile(const string& x){
         edges.push_back(Edge(a, b, c));
     }
 
+    //EN CASO DE QUERER MOSTRAR LA INFORMACION LEIDA
     // Mostrar la información leída
     // cout << "Número de nodos: " << n << endl;
     // cout << "Número de aristas: " << m << endl;
