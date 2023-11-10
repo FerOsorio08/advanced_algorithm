@@ -15,15 +15,15 @@ using namespace std;
 
 
 //Declaraciones de funciones
-vector<vector<int> > FloydWarshall(const vector<vector<int> >& adjacencyMatrix);
+vector<vector<int> > FloydWarshall(const vector<vector<int> >& matrizAdyacente);
 
 //Funciones para Floyd-Warshall
 //recibe la matriz de adyacencia
 //regresa la matriz de adyacencia con los caminos mas cortos
 //Complejidad = O(V^3), donde V es el numero de vertices
-vector<vector<int> > FloydWarshall(const vector<vector<int> >& adjacencyMatrix) {
-    int n = adjacencyMatrix.size();
-    vector<vector<int> > A = adjacencyMatrix;
+vector<vector<int> > FloydWarshall(const vector<vector<int> >& matrizAdyacente) {
+    int n = matrizAdyacente.size();
+    vector<vector<int> > A = matrizAdyacente;
 
     // Inicializar la matriz con valor de infinito
     //numeric_limits<int>::max() es el valor maximo que puede tener un int
@@ -49,7 +49,7 @@ vector<vector<int> > FloydWarshall(const vector<vector<int> >& adjacencyMatrix) 
             }
         }
     }
-    
+
     return A;
 }
 

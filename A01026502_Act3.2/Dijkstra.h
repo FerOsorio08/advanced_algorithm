@@ -18,7 +18,7 @@ using namespace std;
 //Funciones para dijkstra
 // Function to perform Dijkstra's algorithm
 //Comlejidad = O(E+VlogV), donde E es el numero de aristas y V el numero de vertices
-pair<vector<int>, vector<int> > dijkstra(const vector<vector<int> >& graph, int source) {
+pair<vector<int>, vector<int> > dijkstra(const vector<vector<int> >& graph, int raiz) {
     int n = graph.size();
     //distancia para guardar la distancia mas corta
     vector<int> distance(n, numeric_limits<int>::max());
@@ -28,15 +28,15 @@ pair<vector<int>, vector<int> > dijkstra(const vector<vector<int> >& graph, int 
     
     //para cada nodo en el grafo si el nodo es diferente del nodo fuente se agrega a la cola de prioridad
     for (int i = 0; i < n; ++i) {
-        if (i != source) {
+        if (i != raiz) {
             priorityQ.push(make_pair(distance[i], i));
         }
     }
-    distance[source] = 0;
+    distance[raiz] = 0;
 
     //Cola de prioridad con el nodo fuente
     
-    priorityQ.push(make_pair(0, source));
+    priorityQ.push(make_pair(0, raiz));
 
     //mientras la cola de prioridad no este vacia
     while (!priorityQ.empty()) {

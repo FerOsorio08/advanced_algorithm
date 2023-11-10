@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
          << "Número de nodos: " << n << "\x1B[0m" << endl;
 
     // Construir la matriz de adyacencia
-    vector<vector<int>> matrizAdyacencia = construirMatrizAdyacencia(n, edges);
+    vector<vector<int> > matrizAdyacencia = construirMatrizAdyacencia(n, edges);
 
     // Algoritmo de Dijkstra
     cout << "\x1B[1;32m"
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     cout << "\x1B[1;34m"
          << "Floyd-Warshall :"
          << "\x1B[0m" << endl;
-    vector<vector<int>> floydMatrix = FloydWarshall(matrizAdyacencia);
+    vector<vector<int> > floydMatrix = FloydWarshall(matrizAdyacencia);
     cout << "Matriz resultado con el algoritmo de Floyd-Warshall" << endl;
     // recorrer la matriz de adyacencia y mostrarla
     for (const auto &row : floydMatrix){
