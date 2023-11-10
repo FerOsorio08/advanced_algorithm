@@ -45,7 +45,7 @@ pair<vector<int>, vector<int> > dijkstra(const vector<vector<int> >& graph, int 
                 if (tempDistance < distance[v]) {
                     distance[v] = tempDistance;
                     previous[v] = u;
-                    pq.push(make_pair(0, source));
+                    pq.push(make_pair(distance[v], v));
                 }
             }
         }

@@ -37,10 +37,10 @@ int main(int argc, char *argv[]){
             cout << "To node " << i << ": " << distances[i] << endl;
         }
 
-        cout << "Previous nodes in the shortest path:" << endl;
-        for (int i = 0; i < n; ++i) {
-            cout << "Node " << i << ": " << previousNodes[i] << endl;
-        }
+        // cout << "Previous nodes in the shortest path:" << endl;
+        // for (int i = 0; i < n; ++i) {
+        //     cout << "Node " << i << ": " << previousNodes[i] << endl;
+        // }
     }
 
     return 0;
