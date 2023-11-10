@@ -8,6 +8,8 @@
 #include <vector>
 #include <map>
 #include <sstream>
+#include <queue>
+#include <limits>
 #ifndef Read_H
 #define Read_H
 
@@ -95,5 +97,7 @@ vector<vector<int> > construirMatrizAdyacencia(int n, const vector<Edge>& edges)
 
     return adjacencyMatrix;
 }
+
+
 
 #endif

@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include "Read.h"
+#include "Dijkstra.h"
 
 using namespace std;
 
@@ -21,6 +22,26 @@ int main(int argc, char *argv[]){
     int m = edges.size();
     cout << "Número de nodos: " << n << endl;
     vector<vector<int> > matrizAdyacencia = construirMatrizAdyacencia(n, edges);
+
+    // Run Dijkstra's algorithm for every node as the source node
+    for (int i = 0; i < n; ++i) {
+        cout << "Running Dijkstra's algorithm for source node " << i << endl;
+        auto result = dijkstra(matrizAdyacencia, i);
+
+        // Display the results
+        vector<int> distances = result.first;
+        vector<int> previousNodes = result.second;
+
+        cout << "Shortest distances from node " << i << ":" << endl;
+        for (int i = 0; i < n; ++i) {
+            cout << "To node " << i << ": " << distances[i] << endl;
+        }
+
+        cout << "Previous nodes in the shortest path:" << endl;
+        for (int i = 0; i < n; ++i) {
+            cout << "Node " << i << ": " << previousNodes[i] << endl;
+        }
+    }
 
     return 0;
 }
