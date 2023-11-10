@@ -8,6 +8,7 @@
 #include <vector>
 #include "Read.h"
 #include "Dijkstra.h"
+#include "Floyd.h"
 
 using namespace std;
 
@@ -42,6 +43,20 @@ int main(int argc, char *argv[]){
         //     cout << "Node " << i << ": " << previousNodes[i] << endl;
         // }
     }
+
+    vector<vector<int> > resultMatrix = FloydWarshall(matrizAdyacencia);
+    cout << "Matriz de adyacencia con el algoritmo de Floyd-Warshall" << endl;
+    for (const auto& row : resultMatrix) {
+        for (int distance : row) {
+            if (distance == numeric_limits<int>::max()) {
+                cout << "inf ";
+            } else {
+                cout << distance << " ";
+            }
+        }
+        cout << endl;
+    }
+
 
     return 0;
 }
