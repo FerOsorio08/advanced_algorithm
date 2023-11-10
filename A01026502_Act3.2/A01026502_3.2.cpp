@@ -30,7 +30,7 @@ int main(int argc, char *argv[]){
 
         // Display the results
         vector<int> distances = result.first;
-        vector<int> previousNodes = result.second;
+        // vector<int> previousNodes = result.second;
 
         cout << "Shortest distances from node " << i << ":" << endl;
         for (int i = 0; i < n; ++i) {
