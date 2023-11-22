@@ -39,5 +39,7 @@ int main(int argc, char *argv[]){
     // Node goal = {N - 1, N - 1};
 
     vector<Node> path = AStar(start, goal, maze);
+    cout << "Camino: " << endl;
+    printPath(path);
 
 }

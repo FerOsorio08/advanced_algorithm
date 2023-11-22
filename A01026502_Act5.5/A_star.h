@@ -20,6 +20,12 @@ using namespace std;
 //Struct para los nodos
 struct Node {
     int x, y;
+// Default constructor
+    Node() : x(0), y(0) {}
+
+    // Constructors with arguments
+    Node(int _x, int _y) : x(_x), y(_y) {}
+
 
     Node(std::pair<int, int> coordinates) : x(coordinates.first), y(coordinates.second) {}
 
@@ -29,6 +35,10 @@ struct Node {
 
     bool operator==(const Node& other) const {
         return x == other.x && y == other.y;
+    }
+
+    bool operator!=(const Node& other) const {
+        return x != other.x || y != other.y;
     }
 };
 
@@ -46,7 +56,7 @@ int ManhattanDistance(const Node& current, const Node& destination);
 bool isValid(int x, int y, int N, const vector<vector<int> >& maze, vector<vector<bool> >& visited);
 void printPath(const vector<Node>& path);
 vector<Node> AStar(const Node& start, const Node& destination, const vector<vector<int> >& maze);
-
+vector<Node> ReconstructPath(const unordered_map<Node, Node>& parent, const Node& start, const Node& destination);
 
 //Funciones para el algoritmo de A*
 
@@ -128,6 +138,7 @@ void printPath(const vector<Node>& path) {
 vector<Node> AStar(const Node& start, const Node& destination, const vector<vector<int> >& maze) {
     set<Node> openSet;
     unordered_map<Node, Node> parent;
+    parent[start] = start;
     cout << "Start X" << start.x << " " << "Start Y" << start.y << endl;
     unordered_map<Node, int> gScore;
     //gscore from start to start is 0
@@ -153,19 +164,8 @@ vector<Node> AStar(const Node& start, const Node& destination, const vector<vect
 
         //if the current node is the destination node
         if (current.x == destination.x && current.y == destination.y) {
-            //return reconstruct_path(cameFrom, current);
-            vector<Node> path;
-            //reconstruct the path going backwards from the destination node
-            // while (parent.find(current) != parent.end()) {
-            //     path.push_back(current);
-            //     current = parent[current];
-            // }
-            // //add the start node to the path
-            // path.push_back(start);
-            // //reverse the path
-            // reverse(path.begin(), path.end());
-            // //return the path
-            return path;
+            // Call the function to reconstruct the path
+            return ReconstructPath(parent, start, destination);
         }
 
         //remove the current node from openSet
@@ -177,10 +177,10 @@ vector<Node> AStar(const Node& start, const Node& destination, const vector<vect
         //add the neighbors to the vector
 
         
-        // neighbors.push_back(Node(make_pair(current.x - 1, current.y)));
-        // neighbors.push_back(Node(make_pair(current.x, current.y - 1)));
-        // neighbors.push_back(Node(make_pair(current.x + 1, current.y)));
-        // neighbors.push_back(Node(make_pair(current.x, current.y + 1)));
+        neighbors.push_back(Node(make_pair(current.x - 1, current.y)));
+        neighbors.push_back(Node(make_pair(current.x, current.y - 1)));
+        neighbors.push_back(Node(make_pair(current.x + 1, current.y)));
+        neighbors.push_back(Node(make_pair(current.x, current.y + 1)));
         // neighbors.push_back(Node(current.x, current.y - 1));
         // neighbors.push_back(Node(current.x + 1, current.y));
         // neighbors.push_back(Node(current.x, current.y + 1));
@@ -190,34 +190,60 @@ vector<Node> AStar(const Node& start, const Node& destination, const vector<vect
             //integer variables to store the coordinates of the neighbor
             int NextX = neighbor.x;
             int NextY = neighbor.y;
-            cout << "Next X" << NextX << " " << "Next Y" << NextY << endl;
+            cout << "Next X : " << NextX << " " << "Next Y : " << NextY << endl;
             //if the neighbor is a valid node 
             //condition 1: the neighbor is within the maze
             //condition 2: the neighbor is not an obstacle
             //condition 3: the neighbor is not in closedSet
 
-            // if (NextX >= 0 && NextX < maze.size() && NextY >= 0 && NextY < maze.size() && maze[NextX][NextY] == 1) {
-            //     //integer variable to store the distance from start to a neighbor
-            //     int tentative_gScore = gScore[current] + 1;
+            if (NextX >= 0 && NextX < maze.size() && NextY >= 0 && NextY < maze.size() && maze[NextX][NextY] == 1) {
+                //integer variable to store the distance from start to a neighbor
+                int tentative_gScore = gScore[current] + 1;
 
-            //     //if the tentative_gScore is less than the gScore of the neighbor
-            //     if (tentative_gScore < gScore[neighbor]) {
-            //         //update the parent of the neighbor
-            //         //parent of the neighbor is the current node
-            //         parent[neighbor] = current;
-            //         //update the gScore of the neighbor
-            //         gScore[neighbor] = tentative_gScore;
-            //         //update the fScore of the neighbor
-            //         fScore[neighbor] = gScore[neighbor] + ManhattanDistance(neighbor, destination);
-            //         //if the neighbor is not in openSet, add it to openSet
-            //         if (openSet.find(neighbor) == openSet.end()) {
-            //             openSet.insert(neighbor);
-            //         }
-            //     }
-            // }
+                //if the tentative_gScore is less than the gScore of the neighbor
+                if (tentative_gScore < gScore[neighbor]) {
+                    //update the parent of the neighbor
+                    //parent of the neighbor is the current node
+                    parent[neighbor] = current;
+                    //update the gScore of the neighbor
+                    gScore[neighbor] = tentative_gScore;
+                    //update the fScore of the neighbor
+                    fScore[neighbor] = gScore[neighbor] + ManhattanDistance(neighbor, destination);
+                    //if the neighbor is not in openSet, add it to openSet
+                    if (openSet.find(neighbor) == openSet.end()) {
+                    openSet.insert(neighbor);
+                }
+                }
+            }
         }
     }
     return vector<Node>();
+}
+
+vector<Node> ReconstructPath(const unordered_map<Node, Node>& parent, const Node& start, const Node& destination) {
+    vector<Node> path;
+    Node current = destination;
+
+    // Reconstruct the path going backward from the destination node
+    while (current != start) {
+        path.push_back(current);
+        // Check if the current node exists in the parent map
+        if (parent.find(current) != parent.end()) {
+            current = parent.at(current);
+        } else {
+            // Handle the case where the path cannot be reconstructed
+            cerr << "Error: Path reconstruction failed!" << endl;
+            return vector<Node>();
+        }
+    }
+
+    // Add the start node to the path
+    path.push_back(start);
+
+    // Reverse the path
+    reverse(path.begin(), path.end());
+
+    return path;
 }
 
 
