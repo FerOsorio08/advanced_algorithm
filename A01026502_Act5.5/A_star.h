@@ -40,6 +40,14 @@ struct Node {
     bool operator!=(const Node& other) const {
         return x != other.x || y != other.y;
     }
+    Node& operator=(const Node& other) {
+        if (this != &other) {
+            x = other.x;
+            y = other.y;
+        }
+        return *this;
+    }
+
 };
 
 // Provide a hash function for Node
@@ -138,7 +146,7 @@ void printPath(const vector<Node>& path) {
 vector<Node> AStar(const Node& start, const Node& destination, const vector<vector<int> >& maze) {
     set<Node> openSet;
     unordered_map<Node, Node> parent;
-    parent[start] = start;
+    // parent[start] = start;
     cout << "Start X" << start.x << " " << "Start Y" << start.y << endl;
     unordered_map<Node, int> gScore;
     //gscore from start to start is 0
@@ -154,17 +162,19 @@ vector<Node> AStar(const Node& start, const Node& destination, const vector<vect
         // Find the minimum element in openSet
         //current node is the node with the smallest fScore
         Node current = *openSet.begin();
-        cout << "Current X" << current.x << " " << "Current Y" << current.y << endl;
+        // cout << "Current X" << current.x << " " << "Current Y" << current.y << endl;
         //for each node in openSet find the node with the smallest fScore
         for (const auto& node : openSet) {
             if (fScore[node] < fScore[current]) {
                 current = node;
+                cout << "Current X" << current.x << " " << "Current Y" << current.y << endl;
             }
         }
 
         //if the current node is the destination node
         if (current.x == destination.x && current.y == destination.y) {
             // Call the function to reconstruct the path
+            cout << "Reconstructing path" << endl;
             return ReconstructPath(parent, start, destination);
         }
 
@@ -198,7 +208,8 @@ vector<Node> AStar(const Node& start, const Node& destination, const vector<vect
 
             if (NextX >= 0 && NextX < maze.size() && NextY >= 0 && NextY < maze.size() && maze[NextX][NextY] == 1) {
                 //integer variable to store the distance from start to a neighbor
-                int tentative_gScore = gScore[current] + 1;
+                int tentative_gScore = gScore[current] + ManhattanDistance(current, neighbor);
+                cout << "Tentative gScore: " << tentative_gScore << endl;
 
                 //if the tentative_gScore is less than the gScore of the neighbor
                 if (tentative_gScore < gScore[neighbor]) {
@@ -245,6 +256,17 @@ vector<Node> ReconstructPath(const unordered_map<Node, Node>& parent, const Node
 
     return path;
 }
+
+// vector<Node> reconstructPath(const unordered_map<Node, Node>& cameFrom, const Node& current) {
+//     vector<Node> totalPath{current};
+
+//     while (cameFrom.find(current) != cameFrom.end()) {
+//         current = cameFrom.at(current);
+//         totalPath.insert(totalPath.begin(), current);
+//     }
+
+//     return totalPath;
+// }
 
 
 
