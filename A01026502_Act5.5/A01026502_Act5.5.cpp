@@ -28,10 +28,15 @@ int main(int argc, char *argv[]){
     cin >> N;
     maze = crearLaberinto(N);
     imprimirLaberinto(maze);
-    // Node start(0, 0);
-    // Node destination(3, 3);
-    Node start(0, 0);
-    Node goal(N - 1, N - 1);
+    pair<int, int> coordinates = make_pair(0, 0);
+    Node start(coordinates);
+    pair<int, int> coordinates2 = make_pair(N - 1, N - 1);
+    cout << "Inicio: " << start.x << " " << start.y << endl;
+    Node goal(coordinates2);
+    cout << "Meta: " << goal.x << " " << goal.y << endl;
+    // Node start = {0, 0};
+    // cout << "Inicio: " << start.x << " " << start.y << endl;
+    // Node goal = {N - 1, N - 1};
 
     vector<Node> path = AStar(start, goal, maze);
 
