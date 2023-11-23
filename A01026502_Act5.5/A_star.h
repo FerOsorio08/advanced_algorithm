@@ -164,12 +164,12 @@ vector<Node> AStar(const Node& start, const Node& destination, const vector<vect
         cout << "Current Node: " << current.x << " " << current.y << endl;
         // cout << "Current X" << current.x << " " << "Current Y" << current.y << endl;
         //for each node in openSet find the node with the smallest fScore
-        // for (const auto& node : openSet) {
-        //     if (fScore[node] < fScore[current]) {
-        //         current = node;
-        //         cout << "Current X" << current.x << " " << "Current Y" << current.y << endl;
-        //     }
-        // }
+        for (const auto& node : openSet) {
+            if (fScore[node] < fScore[current]) {
+                current = node;
+                cout << "Current X" << current.x << " " << "Current Y" << current.y << endl;
+            }
+        }
 
         //if the current node is the destination node
         if (current.x == destination.x && current.y == destination.y) {
