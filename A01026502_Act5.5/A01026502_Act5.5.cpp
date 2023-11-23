@@ -26,6 +26,8 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    imprimirLaberinto(maze);
+
     string path = findPath(maze, N);
 
     if (path != "No se encontró un camino") {

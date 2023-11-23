@@ -40,7 +40,6 @@ int ManhattanDistance(const Node& current, const Node& destination);
 bool isValid(int x, int y, int N, const vector<vector<int> >& maze, vector<vector<bool> >& visited);
 void printPath(const vector<Node>& path);
 vector<Node> AStar(const Node& start, const Node& destination, const vector<vector<int> >& maze);
-vector<Node> ReconstructPath(const unordered_map<Node, Node>& parent, const Node& start, const Node& destination);
 string findPath(vector<vector<int> > &maze, int N);
 
 //Funciones para el algoritmo de A*
@@ -51,17 +50,7 @@ int ManhattanDistance(const Node& current, const Node& destination){
     return abs(current.x - destination.x) + abs(current.y - destination.y);
 }
 
-
-
-//Función para imprimir la ruta encontrada
-void printPath(const vector<Node>& path) {
-    for (const auto& node : path) {
-        cout << "(" << node.x << "," << node.y << ") ";
-    }
-    cout << endl;
-}
-
-
+//Función para encontrar el camino más corto para llegar al destino
 string findPath(vector<vector<int> > &maze, int N) {
     int dx[] = {-1, 1, 0, 0};
     int dy[] = {0, 0, -1, 1};
