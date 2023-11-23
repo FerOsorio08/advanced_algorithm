@@ -150,8 +150,18 @@ vector<Node> AStar(const Node& start, const Node& destination, const vector<vect
     unordered_map<Node, int> gScore;
     //gscore from start to start is 0
     //start node is {0,0}
-    gScore[start] = 0;
     unordered_map<Node, int> fScore;
+    int infinity = std::numeric_limits<int>::max();
+    for (int x = 0; x < maze.size(); ++x) {
+        for (int y = 0; y < maze[x].size(); ++y) {
+            Node node;
+            node.x = x;
+            node.y = y;
+            gScore[node] = infinity;
+            fScore[node] = infinity;
+        }
+    }
+    gScore[start] = 0;
     fScore[start] = ManhattanDistance(start, destination);
     cout << "Manhattan Distance: " << fScore[start] << endl;
 
@@ -191,9 +201,6 @@ vector<Node> AStar(const Node& start, const Node& destination, const vector<vect
         neighbors.push_back(Node(make_pair(current.x, current.y - 1)));
         neighbors.push_back(Node(make_pair(current.x + 1, current.y)));
         neighbors.push_back(Node(make_pair(current.x, current.y + 1)));
-        // neighbors.push_back(Node(current.x, current.y - 1));
-        // neighbors.push_back(Node(current.x + 1, current.y));
-        // neighbors.push_back(Node(current.x, current.y + 1));
 
         //for each neighbor
         for (const auto& neighbor : neighbors) {
