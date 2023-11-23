@@ -147,7 +147,6 @@ vector<Node> AStar(const Node& start, const Node& destination, const vector<vect
     set<Node> openSet;
     unordered_map<Node, Node> parent;
     // parent[start] = start;
-    cout << "Start X" << start.x << " " << "Start Y" << start.y << endl;
     unordered_map<Node, int> gScore;
     //gscore from start to start is 0
     //start node is {0,0}
@@ -156,20 +155,21 @@ vector<Node> AStar(const Node& start, const Node& destination, const vector<vect
     fScore[start] = ManhattanDistance(start, destination);
     cout << "Manhattan Distance: " << fScore[start] << endl;
 
-    openSet.insert(start);
+    // openSet.insert(start);
 
     while (!openSet.empty()) {
         // Find the minimum element in openSet
         //current node is the node with the smallest fScore
         Node current = *openSet.begin();
+        cout << "Current Node: " << current.x << " " << current.y << endl;
         // cout << "Current X" << current.x << " " << "Current Y" << current.y << endl;
         //for each node in openSet find the node with the smallest fScore
-        for (const auto& node : openSet) {
-            if (fScore[node] < fScore[current]) {
-                current = node;
-                cout << "Current X" << current.x << " " << "Current Y" << current.y << endl;
-            }
-        }
+        // for (const auto& node : openSet) {
+        //     if (fScore[node] < fScore[current]) {
+        //         current = node;
+        //         cout << "Current X" << current.x << " " << "Current Y" << current.y << endl;
+        //     }
+        // }
 
         //if the current node is the destination node
         if (current.x == destination.x && current.y == destination.y) {
@@ -197,36 +197,37 @@ vector<Node> AStar(const Node& start, const Node& destination, const vector<vect
 
         //for each neighbor
         for (const auto& neighbor : neighbors) {
-            //integer variables to store the coordinates of the neighbor
+            // integer variables to store the coordinates of the neighbor
             int NextX = neighbor.x;
             int NextY = neighbor.y;
             cout << "Next X : " << NextX << " " << "Next Y : " << NextY << endl;
-            //if the neighbor is a valid node 
-            //condition 1: the neighbor is within the maze
-            //condition 2: the neighbor is not an obstacle
-            //condition 3: the neighbor is not in closedSet
 
+            // if the neighbor is a valid node 
+            // condition 1: the neighbor is within the maze
+            // condition 2: the neighbor is not an obstacle
+            // condition 3: the neighbor is not in closedSet
             if (NextX >= 0 && NextX < maze.size() && NextY >= 0 && NextY < maze.size() && maze[NextX][NextY] == 1) {
-                //integer variable to store the distance from start to a neighbor
+                // integer variable to store the distance from start to a neighbor
                 int tentative_gScore = gScore[current] + ManhattanDistance(current, neighbor);
                 cout << "Tentative gScore: " << tentative_gScore << endl;
 
-                //if the tentative_gScore is less than the gScore of the neighbor
+                // if the tentative_gScore is less than the gScore of the neighbor
                 if (tentative_gScore < gScore[neighbor]) {
-                    //update the parent of the neighbor
-                    //parent of the neighbor is the current node
+                    // update the parent of the neighbor
+                    // parent of the neighbor is the current node
                     parent[neighbor] = current;
-                    //update the gScore of the neighbor
+                    // update the gScore of the neighbor
                     gScore[neighbor] = tentative_gScore;
-                    //update the fScore of the neighbor
+                    // update the fScore of the neighbor
                     fScore[neighbor] = gScore[neighbor] + ManhattanDistance(neighbor, destination);
-                    //if the neighbor is not in openSet, add it to openSet
+                    // if the neighbor is not in openSet, add it to openSet
                     if (openSet.find(neighbor) == openSet.end()) {
-                    openSet.insert(neighbor);
-                }
+                        openSet.insert(neighbor);
+                    }
                 }
             }
         }
+
     }
     return vector<Node>();
 }
