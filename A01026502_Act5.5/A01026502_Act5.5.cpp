@@ -22,12 +22,14 @@ int main(int argc, char *argv[]) {
     cout << "Ingrese el laberinto (0 para bloqueado, 1 para libre):\n";
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N; j++) {
+            cout << "Fila " << i + 1 << ", Columna " << j + 1 << ": ";
             cin >> maze[i][j];
         }
     }
 
     imprimirLaberinto(maze);
 
+    //implementar el algoritmo de A*
     string path = findPath(maze, N);
 
     if (path != "No se encontró un camino") {
