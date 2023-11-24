@@ -23,36 +23,39 @@ pair<vector<int>, vector<int> > dijkstra(const vector<vector<int> >& graph, int 
     //distancia para guardar la distancia mas corta
     vector<int> distance(n, numeric_limits<int>::max());
     //previo para guardar el camino mas corto
-    vector<int> previous(n, NULL);
+    //ANTES:  vector<int> previous(n, NULL);
+    vector<int> previous(n, -1);  // Use -1 to represent no previous node
     priority_queue<pair<int, int>, vector<pair<int, int> >, greater<pair<int, int> > > priorityQ;
-    
-    //para cada nodo en el grafo si el nodo es diferente del nodo fuente se agrega a la cola de prioridad
-    for (int i = 0; i < n; ++i) {
-        if (i != raiz) {
-            priorityQ.push(make_pair(distance[i], i));
-        }
-    }
+
+    // Cola de prioridad con el nodo fuente
+    //ANTES: para cada nodo en el grafo si el nodo es diferente del nodo fuente se agrega a la cola de prioridad
+    priorityQ.push(make_pair(0, raiz));
     distance[raiz] = 0;
 
-    //Cola de prioridad con el nodo fuente
-    
-    priorityQ.push(make_pair(0, raiz));
-
-    //mientras la cola de prioridad no este vacia
+    // mientras la cola de prioridad no esté vacía
     while (!priorityQ.empty()) {
         int u = priorityQ.top().second;
-        //se saca el nodo con la menor distancia
+        // se saca el nodo con la menor distancia
         priorityQ.pop();
+        //ANTES: no se hacia permanente el nodo
+        // Marcar el nodo como permanente
+        // Esto evita que se agregue nuevamente a la cola de prioridad
+        // después de que su distancia más corta se haya calculado
+        // y se haya extraído de la cola.
+        if (previous[u] != -1) {
+            continue;
+        }
+        previous[u] = u;  // Marcar como permanente
 
         for (int v = 0; v < n; ++v) {
-            //si el nodo v es diferente del nodo u y la distancia entre u y v es diferente de -1
+            // si el nodo v es diferente del nodo u y la distancia entre u y v es diferente de -1
             if (graph[u][v] != -1) {
-                //entonces la distancia temporal es la distancia de u mas la distancia entre u y v
+                // entonces la distancia temporal es la distancia de u más la distancia entre u y v
                 int tempDistance = distance[u] + graph[u][v];
                 if (tempDistance < distance[v]) {
                     distance[v] = tempDistance;
-                    previous[v] = u;
-                    //se agrega a la cola de prioridad
+                    //ANTES: se guardaba el nodo u en el vector de previos
+                    // se agrega a la cola de prioridad
                     priorityQ.push(make_pair(distance[v], v));
                 }
             }
