@@ -19,6 +19,7 @@ vector< vector < int > > crearLaberinto(int N);
 
 
 //Función para recibir los datos del usuario y crear el laberinto
+//Complejidad: O(N^2)
 vector< vector < int > > crearLaberinto(int N){
     vector< vector < int > > maze(N, vector<int>(N, 0));
     cout << "Ingrese los elementos del laberinto (0 o 1):" << endl;
@@ -33,6 +34,7 @@ vector< vector < int > > crearLaberinto(int N){
 }
 
 //Función para imprimir el laberinto
+//Complejidad: O(N^2)
 void imprimirLaberinto(const vector< vector < int > >& maze){
     cout << "Laberinto:" << endl;
     for (const auto &row : maze){
